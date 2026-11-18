@@ -40,8 +40,8 @@ class CompetitorAnalysis(BaseModel):
     competitive_advantages: List[str] = Field(default_factory=list, description="Your brand's core competitive differentiators")
     opportunities: List[str] = Field(default_factory=list, description="Opportunities to improve market positioning")
     source_attribution: str = Field(
-        default="AI-generated competitor research based on extracted brand positioning and verified market category.",
-        description="Transparency note on competitor information source"
+        default="Competitor information is AI-generated and has not been independently verified.",
+        description="Transparency note describing the source and verification status of competitor information"
     )
 
 
@@ -110,8 +110,8 @@ class ServiceItem(BaseModel):
     target_customer: str = Field(..., description="Potential customer type or persona")
     main_benefit: str = Field(..., description="Why customers choose or need this service")
     source: str = Field(
-        default="explicitly extracted from website",
-        description="Source distinction: 'explicitly extracted from website' or 'inferred recommendation'"
+        default="not_verified",
+        description="Indicates whether the service was explicitly extracted from the website, inferred as a recommendation, or has not been verified."
     )
 
 
@@ -174,6 +174,8 @@ class AnalysisMetadata(BaseModel):
     llm_model: str
     tokens_estimated: Dict[str, int] = Field(default_factory=dict)
     cached: bool = False
+    fallback_used: bool = False
+    fallback_reason: Optional[str] = None
 
 
 class LinkAnalysisResponse(BaseModel):
